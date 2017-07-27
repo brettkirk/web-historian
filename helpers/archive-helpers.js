@@ -28,7 +28,6 @@ exports.initialize = function(pathsObj) {
 
 exports.readListOfUrls = function(callback) {
   var listData = '';
-  var result = [];
   fs.readFile(this.paths.list, (err, data) => {
     if (err) {
       console.log('oops');
@@ -62,6 +61,17 @@ exports.addUrlToList = function(url, callback) {
 };
 
 exports.isUrlArchived = function(url, callback) {
+  fs.readdir(this.paths.archivedSites, (err, files) => {
+    if (err) {
+      console.log('oops');
+    } else {
+      if (files.includes(url)) { 
+        callback(true);
+      } else {
+        callback(false);
+      }
+    }
+  });
 };
 
 exports.downloadUrls = function(urls) {

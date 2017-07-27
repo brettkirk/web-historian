@@ -53,7 +53,7 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
-  fs.writeFile(this.paths.list, url, (err) => {
+  fs.writeFile(this.paths.list, url + '\n', (err) => {
     if (err) { throw err; }
     console.log('The file has been saved');
     callback();
@@ -74,7 +74,7 @@ exports.isUrlArchived = function(url, callback) {
   });
 };
 
-exports.isUrlArchivedReturn = function(url) {
+/*exports.isUrlArchivedReturn = function(url) {
   console.log('readdir: ', fs.readdir(this.paths.archivedSites, (err, files) => {
     if (err) {
       console.log('oops');
@@ -82,7 +82,7 @@ exports.isUrlArchivedReturn = function(url) {
       return files.includes(url);
     }
   }));
-};
+};*/
 
 exports.downloadUrls = function(urls) {
   _.each(urls, url => fs.writeFile(this.paths.archivedSites + '/' + url, url, (err) => {

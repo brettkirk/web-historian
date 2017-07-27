@@ -74,6 +74,16 @@ exports.isUrlArchived = function(url, callback) {
   });
 };
 
+exports.isUrlArchivedReturn = function(url) {
+  console.log('readdir: ', fs.readdir(this.paths.archivedSites, (err, files) => {
+    if (err) {
+      console.log('oops');
+    } else {
+      return files.includes(url);
+    }
+  }));
+};
+
 exports.downloadUrls = function(urls) {
   _.each(urls, url => fs.writeFile(this.paths.archivedSites + '/' + url, url, (err) => {
     if (err) { throw err; }

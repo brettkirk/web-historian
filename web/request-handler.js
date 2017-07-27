@@ -6,9 +6,9 @@ var http = require('./http-helpers');
 
 exports.handleRequest = function (req, res) {
   // res.end(archive.paths.list);
-  var indexData = '';
   
   var dataCallback = (err, data) => {
+    var indexData = '';
     if (err) {
       console.log('oops');
     } else {
@@ -52,8 +52,7 @@ exports.handleRequest = function (req, res) {
         
         if (exists === false) {
           archive.addUrlToList(url, function() { console.log('list: ', archive.paths.list); });
-          // http.serveAssets(res, archive.paths.loading, $$$$$$$$___$25callbackCHANGEME);
-          res.end();
+          fs.readFile(archive.paths.loading, dataCallback);
         } else {
           res.end();
         }

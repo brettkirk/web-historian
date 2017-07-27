@@ -75,4 +75,8 @@ exports.isUrlArchived = function(url, callback) {
 };
 
 exports.downloadUrls = function(urls) {
+  _.each(urls, url => fs.writeFile(this.paths.archivedSites + '/' + url, url, (err) => {
+    if (err) { throw err; }
+    console.log('The url has been downloaded!');
+  }));
 };

@@ -7,6 +7,7 @@ var http = require('./http-helpers');
 exports.handleRequest = function (req, res) {
   // res.end(archive.paths.list);
   var indexData = '';
+  
   var dataCallback = (err, data) => {
     if (err) {
       console.log('oops');
@@ -19,14 +20,16 @@ exports.handleRequest = function (req, res) {
   
   
   if (req.method === 'GET') {
-    if (req.url === '/') {
+    if (req.url === '/' || req.url === '/styles.css') {
       fs.readFile(archive.paths.index, dataCallback);
     } else {
+      console.log('get', req.url);
       var url = req.url.slice(1);
       archive.isUrlArchived(url, function(exists) {
         if (exists === true) {
           fs.readFile(archive.paths.archivedSites + req.url, dataCallback);
         } else {
+          console.log('404');
           res.writeHead(404, http.headers);
           res.end();
         }
@@ -38,7 +41,7 @@ exports.handleRequest = function (req, res) {
   //} else if (req.method === 'GET' && req.url === '/' + ) {
     
   } else if (req.method === 'POST') {
-    console.log(req.url);
+    console.log('post', req.url);
     var url = '';
     req.on('data', (chunk) => {
       url += chunk.toString().slice(4);
@@ -49,6 +52,7 @@ exports.handleRequest = function (req, res) {
         
         if (exists === false) {
           archive.addUrlToList(url, function() { console.log('list: ', archive.paths.list); });
+          // http.serveAssets(res, archive.paths.loading, $$$$$$$$___$25callbackCHANGEME);
           res.end();
         } else {
           res.end();
@@ -58,5 +62,4 @@ exports.handleRequest = function (req, res) {
   } else {
     res.end();
   }
-  
 };

@@ -13,6 +13,7 @@ exports.paths = {
   siteAssets: path.join(__dirname, '../web/public'),
   archivedSites: path.join(__dirname, '../archives/sites'),
   index: path.join(__dirname, '../web/public/index.html'),
+  loading: path.join(__dirname, '../web/public/loading.html'),
   list: path.join(__dirname, '../archives/sites.txt')
 };
 
@@ -53,7 +54,8 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
-  fs.writeFile(this.paths.list, url + '\n', (err) => {
+  //var contents = fs.read
+  fs.writeFile(this.paths.list, url + '\n', {flag: 'a'}, (err) => {
     if (err) { throw err; }
     console.log('The file has been saved');
     callback();
@@ -85,7 +87,7 @@ exports.isUrlArchived = function(url, callback) {
 };*/
 
 exports.downloadUrls = function(urls) {
-  _.each(urls, url => fs.writeFile(this.paths.archivedSites + '/' + url, url, (err) => {
+  _.each(urls, url => fs.writeFile(this.paths.archivedSites + '/' + url, url, {flag: 'a'}, (err) => {
     if (err) { throw err; }
     console.log('The url has been downloaded!');
   }));

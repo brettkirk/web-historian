@@ -14,7 +14,8 @@ exports.paths = {
   archivedSites: path.join(__dirname, '../archives/sites'),
   index: path.join(__dirname, '../web/public/index.html'),
   loading: path.join(__dirname, '../web/public/loading.html'),
-  list: path.join(__dirname, '../archives/sites.txt')
+  list: path.join(__dirname, '../archives/sites.txt'),
+  cron: path.join(__dirname, '../archives/cronLog.txt')
 };
 
 // Used for stubbing paths for tests, do not modify
@@ -87,7 +88,7 @@ exports.isUrlArchived = function(url, callback) {
 };*/
 
 exports.downloadUrls = function(urls) {
-  _.each(urls, url => fs.writeFile(this.paths.archivedSites + '/' + url, url, {flag: 'a'}, (err) => {
+  _.each(urls, url => fs.writeFile(this.paths.archivedSites + '/' + url, '$$$$$', {flag: 'a'}, (err) => {
     if (err) { throw err; }
     console.log('The url has been downloaded!');
   }));
